@@ -9,8 +9,6 @@ int main(){
 
     int rj;
 
-    long num;
-
     long v0;
     long v1;
     long v2;
@@ -83,106 +81,66 @@ int main(){
 
                 switch (i){
                     case 0:
-                        num = digit << j;
-
-                        h0 += num;
+                        h0 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh0 += num;
+                        rh0 += digit << rj;
                         
                         break;
                     
                     case 1:
-                        num = digit << j;
-
-                        h1 += num;
+                        h1 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh1 += num;
+                        rh1 += digit << rj;
                         
                         break;
 
                     case 2:
-                        num = digit << j;
-
-                        h2 += num;
+                        h2 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh2 += num;
+                        rh2 += digit << rj;
                         
                         break;
 
                     case 3:
-                        num = digit << j;
-
-                        h3 += num;
+                        h3 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh3 += num;
+                        rh3 += digit << rj;
                         
                         break;
 
                     case 4:
-                        num = digit << j;
-
-                        h4 += num;
+                        h4 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh4 += num;
+                        rh4 += digit << rj;
                         
                         break;
 
                     case 5:
-                        num = digit << j;
-
-                        h5 += num;
+                        h5 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh5 += num;
+                        rh5 += digit << rj;
                         
                         break;
                     
                     case 6:
-                        num = digit << j;
-
-                        h6 += num;
+                        h6 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh6 += num;
+                        rh6 += digit << rj;
                         
                         break;
                     
                     case 7:
-                        num = digit << j;
-
-                        h7 += num;
+                        h7 += digit << j;
                         
                         rj = 7 - j;
-
-                        num = digit << rj;
-
-                        rh7 += num;
+                        rh7 += digit << rj;
                         
                         break;
                                                                                                                                                                
@@ -190,35 +148,35 @@ int main(){
 
                 switch (j){
                     case 0:
-                        v0 += (digit << i);
+                        v0 += digit << i;
                         break;
                     
                     case 1:
-                        v1 += (digit << i);
+                        v1 += digit << i;
                         break;
 
                     case 2:
-                        v2 += (digit << i);
+                        v2 += digit << i;
                         break;
 
                     case 3:
-                        v3 += (digit << i);
+                        v3 += digit << i;
                         break;
 
                     case 4:
-                        v4 += (digit << i);
+                        v4 += digit << i;
                         break;
 
                     case 5:
-                        v5 += (digit << i);
+                        v5 += digit << i;
                         break;
                     
                     case 6:
-                        v6 += (digit << i);
+                        v6 += digit << i;
                         break;
                     
                     case 7:
-                        v7 += (digit << i);
+                        v7 += digit << i;
                         break;
                                                                                                                                                                
                 }
