@@ -5,7 +5,8 @@
 char LOWER_LETTERS[] = "abcdefghijklmnopqrstuvwxyz";
 char CAPITAL_LETTERS[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-int set_unique_words_count(int text_len, char decoded_text[text_len], char unique_words[5000][64], int unique_words_count[5000]);
+void set_list_and_dictionary_word(int text_len, char decoded_text[text_len], char dictionary_words[5000][64],
+                                char text2words_list[5000][64], int word_count[2]);
 
 
 int main(){
@@ -15,21 +16,28 @@ int main(){
 
     int text_len = strlen(decoded_text);
 
+    int word_count[2]; // 0: dictionary_words word count, 1: text2words_list word count
+    char dictionary_words[5000][64];
+    char text2words_list[5000][64];
 
-    int unique_word_count;
-    char unique_words[5000][64];
-    int unique_words_count[5000];
+    set_list_and_dictionary_word(text_len, decoded_text, dictionary_words, text2words_list, word_count);
 
-    unique_word_count = set_unique_words_count(text_len, decoded_text, unique_words, unique_words_count);
-
-    printf("%d", unique_word_count);
+    printf("%d %d", word_count[0], word_count[1]);
 
     return 0;
 }
 
-int set_unique_words_count(int text_len, char decoded_text[text_len], char unique_words[5000][64], int unique_words_count[5000]){
+void set_list_and_dictionary_word(int text_len, char decoded_text[text_len], char dictionary_words[5000][64],
+                                char text2words_list[5000][64], int word_count[2]){
+
+    //word_count => 0: dictionary_words word count, 1: text2words_list word count
+
+    word_count[0] = 0;
+    word_count[1] = 0;
 
     int unique_word_count = 0;
+    char unique_words[5000][64];
+    int unique_words_count[5000];
 
     for (int i = 0; i < text_len; i++){
         
@@ -47,6 +55,8 @@ int set_unique_words_count(int text_len, char decoded_text[text_len], char uniqu
             continue;
         }else{
             word[word_i] = '\0';
+            strcpy(text2words_list[word_count[1]], word);
+            word_count[1] += 1;
         }
         
         
@@ -54,46 +64,33 @@ int set_unique_words_count(int text_len, char decoded_text[text_len], char uniqu
 
         for (int j = 0; j < unique_word_count; j++){
 
-            if (word_i == strlen(unique_words[j])){
+            if (0 == strcmp(unique_words[j],  word)){
+                    
+                unique_words_count[j] += 1;
+                new_word = 0;
 
-                int different_word = 0;
-                
-                for (int k = 0; k < word_i + 1; k++){
+                if (unique_words_count[j] == 2){
                     
-                    if (word[k] != unique_words[j][k]){
-                        different_word = 1;
-                    }
-                    
-                }
+                    strcpy(dictionary_words[unique_word_count], word);
+                    word_count[0] += 1;
 
-                if (different_word == 0){
-                    
-                    unique_words_count[j] += 1;
-                    new_word = 0;
-                
                 }
                 
                 
-
-            }else{
-                continue;
             }
-            
 
         }
 
         if (new_word == 1){
             
             strcpy(unique_words[unique_word_count], word);
+
+            unique_words_count[unique_word_count] = 1;
             unique_word_count += 1;
-            unique_words_count[i] = 1;
 
         }
         
 
     }
-    
-
-    return unique_word_count;
 
 }
