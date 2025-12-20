@@ -2,7 +2,8 @@
 #include <string.h>
 
 
-void remove_enter(int len, char text[len + 1]);
+int move(int text_len, int location, int n);
+int remove_enter(int len, char text[len + 1]);
 
 
 int main(){
@@ -14,7 +15,7 @@ int main(){
 
     int text_len = strlen(text);
 
-    remove_enter(text_len, text);
+    text_len = remove_enter(text_len, text);
 
     while (1){
 
@@ -23,17 +24,19 @@ int main(){
 
         if (strcmp("###", command) == 0){
             
-            printf("%s", text);
+            printf("%s\n", text);
             break;
 
         }else if (strcmp("location", command) == 0){
             
-            printf("%d", location);
+            printf("%d\n", location);
         
         }else if (strcmp("move", command) == 0){
             
             int n;
             scanf(" %d", &n);
+            
+            location = move(text_len, location, n);
 
         }else if (strcmp("rooting", command) == 0){
             
@@ -62,11 +65,27 @@ int main(){
     return 0;
 }
 
+int move(int text_len, int location, int n){
 
-void remove_enter(int len, char text[len + 1]){
+    int new_location = location + n; 
+
+    if (text_len > new_location && new_location > -1){
+        
+        return new_location;
+
+    }
+
+    printf("Not enough characters.\n");
+    
+    return location;
+}
+
+int remove_enter(int len, char text[len + 1]){
 
     if (text[len - 1] == '\n'){
         text[len - 1] = '\0';
+        return (len -1);
     }
 
+    return len;
 }
