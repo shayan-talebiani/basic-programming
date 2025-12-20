@@ -3,7 +3,14 @@
 
 
 int move(int text_len, int location, int n);
-int remove_enter(int len, char text[len + 1]);
+void add_word(int text_len, char text[501], int word_len, char word[501], int location);
+int reverse(int text_len, char text[501], int location);
+
+void insert_space(int text_len, char text[501], int index, int adding_len);
+void remove_space(int text_len, char text[501], int index, int removing_len);
+
+int is_letter(char a);
+int remove_enter(int len, char text[501]);
 
 
 int main(){
@@ -38,17 +45,19 @@ int main(){
             
             location = move(text_len, location, n);
 
-        }else if (strcmp("rooting", command) == 0){
-            
         }else if (strcmp("add", command) == 0){
             
             char word[501];
             scanf(" %s", word);
+
+            add_word(text_len, text, strlen(word), word, location);
+            text_len = strlen(text);
         
         }else if (strcmp("reverse", command) == 0){
             
-        }else if (strcmp("WOW", command) == 0){
+            location = reverse(text_len, text, location);
             
+
         }else if (strcmp("lower", command) == 0){
             
         }else if (strcmp("upper", command) == 0){
@@ -58,12 +67,17 @@ int main(){
             int amount;
             scanf(" %d", &amount);
 
+        }else if (strcmp("rooting", command) == 0){
+            
+        }else if (strcmp("WOW", command) == 0){
+            
         }
         
     }
     
     return 0;
 }
+
 
 int move(int text_len, int location, int n){
 
@@ -80,7 +94,144 @@ int move(int text_len, int location, int n){
     return location;
 }
 
-int remove_enter(int len, char text[len + 1]){
+void add_word(int text_len, char text[501], int word_len, char word[501], int location){
+
+    int insert_len = word_len;
+
+    int index = 0;
+
+    while (is_letter(text[location + index])){
+        
+        index += 1;
+
+
+    }
+
+    
+    int first_space = 0;
+    int last_space = 0;
+
+    int start_index = location + index;
+
+    if (text[start_index] == '\0'){
+
+        first_space = 1;
+        last_space = 0;
+        insert_len += 1;
+
+        insert_space(text_len, text, start_index - 1, insert_len);
+
+    }else{
+
+        if (index == 0){
+
+            first_space = 0;
+
+            if (is_letter(text[start_index + 1])){
+            
+                last_space = 1;
+                insert_len += 1;
+
+            }
+
+            insert_space(text_len, text, start_index, insert_len);
+
+        }else{
+
+            first_space = 1;
+            insert_len += 1;
+
+            insert_space(text_len, text, start_index - 1, insert_len);
+        }
+
+        
+    }
+    
+    
+    for (int i = 0; i < insert_len - first_space - last_space; i++){
+        text[i + start_index + 1] = word[i];
+    }
+
+    if (first_space == 1){
+        text[start_index] = ' '; 
+    }
+
+    if (last_space == 1){
+        text[start_index + insert_len] = ' '; 
+    }
+
+}
+
+int reverse(int text_len, char text[501], int location){
+
+
+    if (is_letter(text[location]) == 0){
+        return location;
+    }
+    
+
+    int start = location;
+    int word_len = -1;
+
+    int index = 0;
+
+    while (is_letter(text[location + index])){
+        word_len += 1;
+        index += 1;
+    }
+
+    index = 0;
+    
+    while (is_letter(text[location + index])){
+        word_len += 1;
+        index -= 1;
+        
+        if (location + index > -1){
+            break;
+        }
+    }
+
+    int first_letter = location + index + 1;
+
+    int half_len = word_len / 2;
+    int limit = first_letter + half_len;
+
+    for (int i = first_letter; i < limit; i++){
+        
+        char temp = text[i];
+        int j = first_letter + word_len - 1 - (i - first_letter);
+        text[i] = text[j];
+        text[j] = temp;
+
+    }
+    
+    return (first_letter + word_len - 1 - (location - first_letter));
+}
+
+
+void insert_space(int text_len, char text[501], int index, int adding_len){
+
+    for (int i = text_len + 1; i > index; i--){
+        text[i + adding_len] = text[i];
+    }
+    
+
+}
+
+void remove_space(int text_len, char text[501], int index, int removing_len){
+
+    for (int i = index + 1; i < text_len + 1; i++){
+        text[i] = text[i + removing_len];
+    }
+}
+
+
+int is_letter(char a){
+    return (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
+}
+
+int remove_enter(int len, char text[501])
+{
 
     if (text[len - 1] == '\n'){
         text[len - 1] = '\0';
