@@ -11,7 +11,10 @@ int main(){
 
     char text[501];
     fgets(text, sizeof(text), stdin);
-    remove_enter(strlen(text), text);
+
+    int text_len = strlen(text);
+
+    remove_enter(text_len, text);
 
     while (1){
 
