@@ -5,10 +5,16 @@
 int move(int text_len, int location, int n);
 void add_word(int text_len, char text[501], int word_len, char word[501], int location);
 int reverse(int text_len, char text[501], int location);
+void lower(int text_len, char text[501], int location);
+void upper(int text_len, char text[501], int location);
+int change(int text_len, char text[501], int location, int amount);
+void wow(int text_len, char text[501]);
+
 
 void insert_space(int text_len, char text[501], int index, int adding_len);
 void remove_space(int text_len, char text[501], int index, int removing_len);
 
+int check_aeuio(char letter);
 int is_letter(char a);
 int remove_enter(int len, char text[501]);
 
@@ -57,19 +63,25 @@ int main(){
             
             location = reverse(text_len, text, location);
             
-
         }else if (strcmp("lower", command) == 0){
+
+            lower(text_len, text, location);
             
         }else if (strcmp("upper", command) == 0){
+
+            upper(text_len, text, location);
             
         }else if (strcmp("change", command) == 0){
             
             int amount;
             scanf(" %d", &amount);
 
-        }else if (strcmp("rooting", command) == 0){
-            
+            location = change(text_len, text, location, amount);
+
         }else if (strcmp("WOW", command) == 0){
+            wow(text_len, text);
+            text_len = strlen(text);
+        }else if (strcmp("rooting", command) == 0){
             
         }
         
@@ -208,6 +220,98 @@ int reverse(int text_len, char text[501], int location){
     return (first_letter + word_len - 1 - (location - first_letter));
 }
 
+void lower(int text_len, char text[501], int location){
+
+    int index = 0;
+
+    while (is_letter(text[location + index])){
+
+        if ('A' <= text[location + index] && 'Z' >= text[location + index]){
+            text[location + index] += 32;
+        }
+        
+
+        index += 1;
+    }
+
+}
+
+void upper(int text_len, char text[501], int location){
+
+    int index = 0;
+
+    while (is_letter(text[location + index])){
+
+        if ('a' <= text[location + index] && 'z' >= text[location + index]){
+            text[location + index] -= 32;
+        }
+        
+
+        index += 1;
+    }
+
+}
+
+int change(int text_len, char text[501], int location, int amount){
+
+    if (text_len - 1 < location + amount){
+        
+        printf("Not enough characters.");
+        return location;
+
+    }
+
+    for (int i = location; i < location + amount; i++){
+        
+        if (is_letter(text[i])){
+            
+            if (text[i] == 'z'){
+                text[i] = 'a'; 
+            }else if (text[i] == 'Z'){
+                text[i] = 'A';
+            }else{
+                text[i] += 1;
+            }
+            
+        }
+        
+
+    }
+    
+    
+    return (location + amount);
+}
+
+void wow(int text_len, char text[501]){
+    
+    for (int i = 0; i < text_len; i++){
+        
+        int word_index = 0;
+        int aeuio = 0;
+
+        while (is_letter(text[i + word_index])){
+
+            if (check_aeuio(text[i + word_index])){
+                aeuio += 1;
+            }
+        
+
+            word_index += 1;
+        }
+
+        if (word_index - 1 >= 4 && 1 < aeuio){
+            insert_space(text_len, text, i + word_index - 1, 1);
+            text_len += 1;
+            text[i + word_index] = '!';
+            i += word_index - 1;
+        }else{
+            i += word_index;
+        }
+        
+    }
+    
+}
+
 
 void insert_space(int text_len, char text[501], int index, int adding_len){
 
@@ -226,12 +330,20 @@ void remove_space(int text_len, char text[501], int index, int removing_len){
 }
 
 
+int check_aeuio(char letter){
+
+    if (letter == 'a' || letter == 'e' || letter == 'u' || letter == 'i' || letter == 'o'){
+        return 1;
+    }
+    
+    return 0;
+}
+
 int is_letter(char a){
     return (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z');
 }
 
-int remove_enter(int len, char text[501])
-{
+int remove_enter(int len, char text[501]){
 
     if (text[len - 1] == '\n'){
         text[len - 1] = '\0';
