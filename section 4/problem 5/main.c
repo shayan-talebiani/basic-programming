@@ -9,7 +9,9 @@ void lower(int text_len, char text[501], int location);
 void upper(int text_len, char text[501], int location);
 int change(int text_len, char text[501], int location, int amount);
 void wow(int text_len, char text[501]);
+int rooting(int text_len, char text[501], int location);
 
+int rooting_word(int text_len, char text[501], char word[]);
 
 void insert_space(int text_len, char text[501], int index, int adding_len);
 void remove_space(int text_len, char text[501], int index, int removing_len);
@@ -82,7 +84,8 @@ int main(){
             wow(text_len, text);
             text_len = strlen(text);
         }else if (strcmp("rooting", command) == 0){
-            
+            location = rooting(text_len, text, location);
+            text_len = strlen(text);
         }
         
     }
@@ -310,6 +313,69 @@ void wow(int text_len, char text[501]){
         
     }
     
+}
+
+int rooting(int text_len, char text[501], int location){
+
+    text_len = rooting_word(text_len, text, "go");
+    text_len = rooting_word(text_len, text, "run");
+    text_len = rooting_word(text_len, text, "play");
+    text_len = rooting_word(text_len, text, "right");
+    text_len = rooting_word(text_len, text, "light");
+    text_len = rooting_word(text_len, text, "happy");
+    text_len = rooting_word(text_len, text, "quick");
+    text_len = rooting_word(text_len, text, "art");
+    text_len = rooting_word(text_len, text, "rat");
+    text_len = rooting_word(text_len, text, "star");
+
+    if (location < text_len){
+        return location;
+    }else{
+        return (text_len - 1);
+    }
+    
+    
+}
+
+
+int rooting_word(int text_len, char text[501], char word[]){
+
+    int word_len = strlen(word);
+
+    int index = 0;
+
+    while (strstr(text + index, word) != NULL){
+
+        int i = strstr(text + index, word) - text ;
+
+        int j = 1;
+
+        while (is_letter(text[i + j + word_len - 1])){
+        
+            j += 1;
+
+
+        }
+
+        remove_space(text_len, text, i + word_len - 1, j - 1);
+        
+        int k = -1;
+
+        while (k + i > -1 && is_letter(text[i + k])){
+        
+            k -= 1;
+
+        }
+
+        remove_space(text_len, text, i + k, - k - 1);
+        
+        text_len -= - k - 1 + j - 1;
+
+        index = i + k + 1 + word_len - 1; 
+
+    }
+
+    return text_len;
 }
 
 
