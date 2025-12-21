@@ -197,13 +197,9 @@ int reverse(int text_len, char text[501], int location){
 
     index = 0;
     
-    while (is_letter(text[location + index])){
+    while (location + index > -1 && is_letter(text[location + index])){
         word_len += 1;
         index -= 1;
-        
-        if (location + index > -1){
-            break;
-        }
     }
 
     int first_letter = location + index + 1;
@@ -220,7 +216,8 @@ int reverse(int text_len, char text[501], int location){
 
     }
     
-    return (first_letter + word_len - 1 - (location - first_letter));
+    //return (first_letter + word_len - 1 - (location - first_letter));
+    return location;
 }
 
 void lower(int text_len, char text[501], int location){
@@ -398,7 +395,8 @@ void remove_space(int text_len, char text[501], int index, int removing_len){
 
 int check_aeuio(char letter){
 
-    if (letter == 'a' || letter == 'e' || letter == 'u' || letter == 'i' || letter == 'o'){
+    if (letter == 'a' || letter == 'e' || letter == 'u' || letter == 'i' || letter == 'o' ||
+        letter == 'A' || letter == 'E' || letter == 'U' || letter == 'I' || letter == 'O'){
         return 1;
     }
     
