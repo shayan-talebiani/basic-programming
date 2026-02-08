@@ -1,0 +1,12 @@
+{
+  "name": "Ali",
+  "age": 25,
+  "address" : {
+      "city" : "Tehran",
+      "province" : "Tehran",
+        "address" : {
+          "city" : "Tehran",
+          "province" : "Tehran"
+        }
+  }
+}
