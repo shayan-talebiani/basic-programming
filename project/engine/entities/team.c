@@ -1,5 +1,5 @@
 #include "team.h"
-#include "ball.h" 
+#include "ball.h"
 #include "game/scene.h"
 #include "logic/referee.h"
 #include <stdlib.h>
@@ -30,6 +30,12 @@ void update_team(struct Scene* scene, struct Team* team) {
             struct Player *player = players[i];
             switch (player->state) {
                 case IDLE:
+                    player->velocity.x = 0.0f;
+                    player->velocity.y = 0.0f;
+                    if (player == ball->possessor) {
+                        ball->velocity.x = 0.0f;
+                        ball->velocity.y = 0.0f;
+                    }
                     break;
                 case MOVING:
                     player->movement_logic(player, scene);
